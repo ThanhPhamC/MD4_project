@@ -26,6 +26,7 @@ public class JwtTokenProvider {
                 .setIssuedAt(now)
                 .setExpiration(dateExpired)
                 .signWith(SignatureAlgorithm.HS512,JWT_SECRET).compact();
+
     }
     //Lay thong tin user tu jwt
     public String getUserNameFromJwt(String token){

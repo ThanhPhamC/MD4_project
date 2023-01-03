@@ -94,7 +94,7 @@ public class ProductController {
         }
     }
     @PutMapping("/updateProduct")
-//    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> updateProduct(@RequestBody ProductUpdate pUdate) {
         try {
             Product product = new Product();

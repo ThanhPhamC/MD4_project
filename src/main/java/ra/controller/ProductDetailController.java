@@ -2,6 +2,7 @@ package ra.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ra.dto.request.ProductDetailModel;
 import ra.dto.request.ProductDetailUpdate;
@@ -28,6 +29,7 @@ public class ProductDetailController {
     private ProductDetailService detailService;
 
     @PostMapping("/creatNew")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> creatNew(@RequestBody ProductDetailModel model) {
         boolean check = detailService.existsByColor_ColoIdAndAndSize_SizeIdAndProduct_ProductId(
                 model.getColorId(), model.getSizeId(), model.getProductId());
@@ -55,6 +57,7 @@ public class ProductDetailController {
         }
     }
     @PutMapping("/updateDetail")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> updateDetail(@RequestBody ProductDetailUpdate update) {
         ProductDetail detailList= detailService.findByColor_ColoIdAndSize_SizeIdAndProduct_ProductId(
                 update.getColorId(), update.getSizeId(),update.getProductId());

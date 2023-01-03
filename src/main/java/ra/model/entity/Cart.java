@@ -38,7 +38,6 @@ public class Cart {
     private int cartStatus;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
-    @JsonIgnore
     private Users users;
     @OneToMany (mappedBy = "cart")
     List<CartDetail>  cartDetails= new ArrayList<>();

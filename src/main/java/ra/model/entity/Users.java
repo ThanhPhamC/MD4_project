@@ -16,16 +16,16 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserId")
     private int userId;
-    @Column(name = "UserName",unique = true,nullable = false)
+    @Column(name = "UserName", unique = true, nullable = false)
     private String userName;
-    @Column(name = "fullName",unique = true,nullable = false)
+    @Column(name = "fullName", unique = true, nullable = false)
     private String fullName;
-    @Column(name = "Password",nullable = false)
+    @Column(name = "Password", nullable = false)
     private String password;
     @Column(name = "Created")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date created;
-    @Column(name = "Email",nullable = false,unique = true)
+    @Column(name = "Email", nullable = false, unique = true)
     private String email;
     @Column(name = "Phone")
     private String phone;
@@ -36,9 +36,10 @@ public class Users {
     @Column(name = "UserStatus")
     private boolean userStatus;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "User_Role",joinColumns = @JoinColumn(name = "UserId"),
+    @JoinTable(name = "User_Role", joinColumns = @JoinColumn(name = "UserId"),
             inverseJoinColumns = @JoinColumn(name = "RoleId"))
     private Set<Roles> listRoles = new HashSet<>();
     @OneToMany(mappedBy = "users")
-    List<Cart> cartList= new ArrayList<>();
+    @JsonIgnore
+    List<Cart> cartList = new ArrayList<>();
 }

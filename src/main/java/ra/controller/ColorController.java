@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ra.dto.request.ColorModel;
 import ra.dto.response.MessageResponse;
@@ -24,6 +25,7 @@ import java.util.Map;
 public class ColorController {
     private ColorService colorService;
     @GetMapping("/getPaggingAndSortByName")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Map<String, Object>> getPaggingAndSortByName(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "4") int size,
@@ -44,6 +46,7 @@ public class ColorController {
         return new ResponseEntity<>(data, HttpStatus.OK);
     }
     @PostMapping("/creatNew")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> creatNew(@RequestBody ColorModel colorModel) {
         try {
             Color color = new Color();
@@ -57,6 +60,7 @@ public class ColorController {
         }
     }
     @PutMapping("/updateColor")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> updateColor(@RequestBody Color color) {
         try {
             colorService.saveOrUpdate(color);
@@ -66,6 +70,7 @@ public class ColorController {
         }
     }
     @DeleteMapping("/deleteColor")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<?> deleteColor(int colorId) {
         try {
             Color color = (Color) colorService.findById(colorId);
@@ -77,6 +82,7 @@ public class ColorController {
         }
     }
     @GetMapping("/findByName")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
     ResponseEntity<Map<String, Object>> findByName(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "1") int size,

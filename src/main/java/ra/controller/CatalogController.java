@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class CatalogController {
    private CatalogService catalogService;
     @GetMapping("/getPaggingAndSortByName")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Map<String,Object>> getPaggingAndSortByName(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "4") int size,
@@ -46,6 +47,7 @@ public class CatalogController {
         return  new ResponseEntity<>(data, HttpStatus.OK);
     }
     @GetMapping("/searchByName")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
     public ResponseEntity<Map<String,Object>> searchByName(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "4") int size,
@@ -76,6 +78,7 @@ public class CatalogController {
     }
     @GetMapping("findChildById")
     @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
+
     public List<CatalogDto> findChildById(int catalogId) {
         List<Catalog> lists = catalogService.findChildById(catalogId);
         List<CatalogDto> dtoList = lists.stream()
@@ -83,6 +86,8 @@ public class CatalogController {
         return dtoList;
     }
     @DeleteMapping("/delete")
+    @PreAuthorize(" hasRole('MODERATOR') or hasRole('ADMIN')")
+
     public ResponseEntity<?> deleteCatalog(int catalogId){
         List<Catalog> lists = catalogService.findChildById(catalogId);
         for (Catalog cat:lists) {
